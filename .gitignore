@@ -1,0 +1,59 @@
+# =========================
+# IntelliJ IDEA / Java
+# =========================
+
+# Configuración de IntelliJ
+.idea/
+*.iml
+
+# Compilados de Java
+*.class
+
+# Carpetas de compilación
+target/
+out/
+build/
+
+# Logs
+*.log
+
+
+# =========================
+# Visual Studio Code
+# =========================
+
+.vscode/
+
+# =========================
+# Sistema operativo
+# =========================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# =========================
+# Archivos temporales
+# =========================
+
+*.tmp
+*.temp
+*.swp
+*.swo
+
+
+# =========================
+# Node.js (por si usamos JS)
+# =========================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

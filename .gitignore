@@ -1,59 +1,51 @@
-# =========================
-# IntelliJ IDEA / Java
-# =========================
-
-# Configuración de IntelliJ
-.idea/
-*.iml
-
-# Compilados de Java
+# Compilación Java
+target/
 *.class
 
-# Carpetas de compilación
-target/
-out/
-build/
+# Maven
+.mvn/
+!mvnw
+!mvnw.cmd
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.classpath
+.project
+.settings/
+.springBeans
+
+# VS Code
+.vscode/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
 
 # Logs
 *.log
+logs/
 
-
-# =========================
-# Visual Studio Code
-# =========================
-
-.vscode/
-
-# =========================
-# Sistema operativo
-# =========================
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-# macOS
-.DS_Store
-
-# Linux
-*~
-
-# =========================
 # Archivos temporales
-# =========================
-
 *.tmp
 *.temp
 *.swp
-*.swo
 
+# Spring Boot
+spring-boot-devtools.properties
 
-# =========================
-# Node.js (por si usamos JS)
-# =========================
+# Variables de entorno y configuración local
+.env
+.env.*
+application-local.properties
+application-local.yml
+application-local.yaml
 
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Archivos de configuración sensibles
+application-secret.properties
+application-secret.yml
+application-secret.yaml

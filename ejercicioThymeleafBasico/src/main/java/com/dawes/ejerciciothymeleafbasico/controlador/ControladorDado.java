@@ -1,7 +1,7 @@
 package com.dawes.ejerciciothymeleafbasico.controlador;
 
-import ch.qos.logback.core.model.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Random;
@@ -13,5 +13,6 @@ public class ControladorDado {
         Random random = new Random();
         int posicion = random.nextInt(6) + 1;
         dado.addAttribute("dado", posicion);
+        return "dadoAleatorio";
     }
 }

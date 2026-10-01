@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http//www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito</title>
+</head>
+<body>
+<div th:object="${carrito}">
+    <p th:text="|*{lineaCarrito1.producto.nombre} x *{lineaCarrito1.cantidad} = *{lineaCarrito1.importe}|"></p>
+    <p th:text="|*{lineaCarrito2.producto.nombre} x *{lineaCarrito2.cantidad} = *{lineaCarrito2.importe}|"></p>
+    <p th:text="|*{lineaCarrito3.producto.nombre} x *{lineaCarrito3.cantidad} = *{lineaCarrito3.importe}|"></p>
+    <hr>
+    <p th:text="|SUBTOTAL: *{subtotal}|"></p>
+    <p th:text="|IVA: *{IVA}|"></p>
+    <p th:text="|TOTAL: *{total}|"></p>
+
+</div>
+</body>
+</html>

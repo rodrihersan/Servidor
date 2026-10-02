@@ -1,12 +1,11 @@
 package com.dawes.ejerciciothymeleafampliacion.controlador;
 
-import com.dawes.ejerciciothymeleafampliacion.modelo.Carrito;
-import com.dawes.ejerciciothymeleafampliacion.modelo.LineaCarrito;
-import com.dawes.ejerciciothymeleafampliacion.modelo.Producto;
+import com.dawes.ejerciciothymeleafampliacion.modelo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDate;
 import java.util.Random;
 
 @Controller
@@ -32,5 +31,36 @@ public class ControladorPrincipal {
         return "carrito";
     }
 
+    @RequestMapping("/pasaporte")
+    public String pasaporte(Model model){
+        LocalDate fechaNacimiento = LocalDate.of(2002, 5, 15);
 
+
+        Direccion direccion = new Direccion(
+                "Calle Mayor",
+                10,
+                "Salamanca"
+        );
+
+        Persona persona = new Persona(
+                "Rodrigo",
+                "Hernandez",
+                fechaNacimiento,
+                direccion
+        );
+
+        LocalDate fechaActual = LocalDate.now();
+        int edad = fechaActual.getYear() - persona.getFechaNacimiento().getYear();
+
+        Random r = new Random();
+        int numAleatorio = r.nextInt(9000)+1000;
+
+        String codigoPasaporte = persona.getApellidos().substring(0, 2).toUpperCase() + "-" + persona.getFechaNacimiento().getYear() + "-" + numAleatorio;
+
+        model.addAttribute("persona", persona);
+        model.addAttribute("edad", edad);
+        model.addAttribute("pasaporte", codigoPasaporte);
+
+        return "pasaporte";
+    }
 }

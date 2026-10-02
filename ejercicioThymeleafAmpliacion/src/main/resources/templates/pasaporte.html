@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http//www.thymeleaf.org"><head>
+    <meta charset="UTF-8">
+    <title>pasaporte</title>
+</head>
+<body>
+<div th:object="${persona}">
+
+    <p th:text="|Nombre: *{nombre}|"></p>
+
+    <p th:text="|Apellidos: *{apellidos}|"></p>
+
+    <p th:text="|Fecha de nacimiento: *{fechaNacimiento}|"></p>
+
+    <p th:text="|Calle: *{direccion.calle}|"></p>
+
+    <p th:text="|Número: *{direccion.numero}|"></p>
+
+    <p th:text="|Ciudad: *{direccion.ciudad}|"></p>
+
+    <hr>
+
+    <p th:text="|Edad: ${edad}|"></p>
+
+    <p th:text="|Código de pasaporte: ${pasaporte}|"></p>
+
+</div>
+</body>
+</html>

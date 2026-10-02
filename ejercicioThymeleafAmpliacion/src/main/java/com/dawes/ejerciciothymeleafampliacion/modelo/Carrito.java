@@ -12,8 +12,9 @@ public class Carrito {
     }
 
     public double getSubtotal(){
-        double suma = this.lineaCarrito1.getCantidad() +
-                this.lineaCarrito2.getProducto().getPrecio() + this.lineaCarrito3.getProducto().getPrecio();
+        double suma = this.lineaCarrito1.getProducto().getPrecio() * this.lineaCarrito1.getCantidad()
+                + this.lineaCarrito2.getProducto().getPrecio() * this.lineaCarrito2.getCantidad()
+                + this.lineaCarrito3.getProducto().getPrecio() * this.lineaCarrito3.getCantidad();
         return suma;
     }
 

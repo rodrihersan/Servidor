@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http//www.thymeleaf.org"><head>
+<head>
+    <meta charset="UTF-8">
+    <title>Apartado 3</title>
+</head>
+<body>
+<div th:object="${juego}">
+    <p th:text="|Titulo: *{titulo}|"></p>
+    <p th:text="|Genero: *{genero}|"></p>
+    <p th:text="|Precio: *{precio}|"></p>
+    <p th:text="|Horas jugadas: *{horasJugadas}|"></p>
+
+    <hr>
+    <p th:text="|Porcentaje de descuento: *{descuentoAleatorio}%|"></p>
+    <p th:text="|Descuento en euros: *{descuento}€|"></p>
+    <p th:text="|Precio final del juego: *{finalTrasDescuento}€|"></p>
+
+
+</div>
+</body>
+</html>

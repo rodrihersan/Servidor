@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http//www.thymeleaf.org"><head>
+<head>
+    <meta charset="UTF-8">
+    <title>Apartado 2</title>
+</head>
+<body>
+<div th:object="${juego}">
+    <p th:text="|Titulo: *{titulo}|"></p>
+    <p th:text="|Genero: *{genero}|"></p>
+    <p th:text="|Horas jugadas: *{horasJugadas}|"></p>
+    <hr>
+    <p th:text="|Tipo de jugador *{tipoJugador}|"></p>
+    <p th:text="|El coste de la hora sale a: *{costeHora}|"></p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http//www.thymeleaf.org"><head>
+<head>
+    <meta charset="UTF-8">
+    <title>Apartado 1</title>
+</head>
+<body>
+<div th:object="${usuario}">
+    <p th:text="|Nick: *{nick}|"></p>
+    <p th:text="|Pais: *{pais}|"></p>
+    <p th:text="|Año de registro: *{fechaRegistro}|"></p>
+    <hr>
+    <p th:text="|Miembro desde hace ${anoRegistrados} años|"></p>
+</div>
+</body>
+</html>

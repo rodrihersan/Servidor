@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Matrícula</title>
+</head>
+<body>
+<div th:object="${vehiculo}">
+    <p th:text="|*{marca} *{modelo} (*{anio}), matrícula ${matricula}, *{antiguedad} años, etiqueta *{etiqueta}|"></p>
+</div>
+</body>
+</html>

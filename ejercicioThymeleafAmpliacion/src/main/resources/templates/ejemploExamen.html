@@ -1,0 +1,774 @@
+<!--
+
+
+Simulacro de examen: LoL
+
+Apartado 1. Invocador (/invocador)
+Crea la clase Invocador con nick, servidor y fecha de creación de la cuenta (LocalDate).
+Calcula en Java los años que lleva la cuenta y pásalos como atributo aparte. La vista usa th:object y muestra: Invocador Faker (EUW). Cuenta creada hace 12 años.
+
+Apartado 2. Ficha de campeón (/campeon)
+Crea la clase Campeon con nombre, rol, precio en EA (double) y partidas jugadas (int, mayor que 0).
+Calcula en Java el coste por partida (máximo dos decimales) y el tipo de jugador: menos de 10, Novato; de 10 a 99, Habitual; 100 o más, Main. La vista muestra: Ahri (Mid): 4800 EA, 120 partidas → 40.0 EA/partida. Tipo de jugador: Main.
+
+Apartado 3. Skin en oferta (/oferta)
+Crea la clase Skin con nombre y precio en RP. Genera un descuento aleatorio entre el 15 % y el 60 % (ambos incluidos) y calcula el precio final y el ahorro.
+La vista muestra: Skin Spirit Blossom Ahri: -35 % → 1170 RP (ahorras 630 RP).
+
+Apartado 4. Equipo (/equipo)
+Crea la clase Jugador (nick, kills, muertes, asistencias) y la clase Equipo, que contiene tres Jugador.
+Equipo debe tener getKillsTotales(), getAsistenciasTotales() y getMVP() (el jugador con más kills).
+Pasa el equipo con un único addAttribute. En el controlador calcula la media de kills por jugador (división entera) y pásala como atributo aparte. La vista usa th:object y muestra:
+
+Nick y kills de cada jugador.
+Kills y asistencias totales.
+El nombre del MVP, accediendo a él a través del equipo.
+La frase Media de 7 kills por jugador.
+
+Apartado 5. Campeón del día (/sugerencia)
+En el controlador, define un array con 6 campeones y elige uno al azar con Random. La vista muestra: Hoy te recomendamos jugar: Jinx.
+
+Apartado 6. KDA de una partida (/kda)
+Crea la clase Partida con campeón, kills, muertes (mayor que 0) y asistencias. Calcula en Java el KDA = (kills + asistencias) / muertes, con máximo dos decimales, y
+la valoración: menos de 2, Floja; de 2 a menos de 4, Normal; 4 o más, Excelente. La vista muestra: Yasuo: 10/4/6 → KDA 4.0. Valoración: Excelente.
+
+Apartado 7. Duelo de campeones (/duelo)
+Crea la clase Luchador con nombre, vida y ataque. En el controlador crea dos con nombres fijos, vida aleatoria entre 100 y 200 y ataque aleatorio entre 10 y 30.
+El combate tiene 5 rondas, y en cada una los dos se atacan a la vez.
+Con un bucle en Java construye el resumen de cada ronda (Ronda 1: Garen (170) - Darius (155)), decide el ganador (o el empate) y calcula la diferencia de vida.
+La vista solo muestra el resumen, el ganador y la diferencia.
+
+Apartado 8. Tienda de objetos (/tienda)
+Crea las clases Objeto (nombre y precio en oro), LineaCompra (un objeto y una cantidad) y Cesta (tres LineaCompra).
+La cantidad de cada línea es aleatoria entre 1 y 3. Cesta debe tener getSubtotal(), getComision() (el 10 % del subtotal) y getTotal().
+Pasa solo la cesta a la vista con un único addAttribute. La vista muestra, por cada línea, nombre x cantidad = importe, y debajo el subtotal, la comisión y el total.
+
+Apartado 9. Código de cuenta (/codigo)
+Con un Invocador (nick y fecha de creación), genera en Java un código con las dos primeras letras del nick en mayúsculas, el año de creación y un número aleatorio de 4 cifras.
+Ejemplo: FA-2014-4821. Calcula también los años de antigüedad. El código y los años llegan como atributos aparte. La vista usa th:object sobre el invocador.
+
+Apartado 10. Resumen libre (/resumen)
+El diseño lo decides tú. La ruta debe mostrar exactamente este texto: Ficha de Faker, 29 años, de Corea. Ha ganado la partida con un 7.
+
+Usa al menos dos clases propias en el paquete modelo.
+La edad se calcula a partir de una fecha de nacimiento.
+La puntuación es aleatoria entre 0 y 10, y la palabra ganado o perdido se decide en Java (5 o más, ganado).
+La vista debe combinar th:object y al menos un atributo aparte.
+
+Para todos los apartados:
+
+Crea un index.html en templates con un enlace a cada ruta usando la sintaxis de Thymeleaf.
+Usa variables en camelCase con nombres descriptivos.
+La lógica va en Java, y la vista solo muestra resultados.
+
+-------------------------------------------------------------------------
+                                CONTROLADOR
+-------------------------------------------------------------------------
+
+
+package com.dawes.ejerciciothymeleafampliacion.controlador;
+
+import com.dawes.ejerciciothymeleafampliacion.modelo.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.time.LocalDate;
+import java.util.Random;
+
+@Controller
+public class ControladorPrincipal {
+
+    // 1. Invocador
+    @RequestMapping("/invocador")
+    public String invocador(Model model) {
+        Invocador invocador = new Invocador("Faker", "EUW", LocalDate.of(2014, 1, 1));
+        int anios = LocalDate.now().getYear() - invocador.getFechaCreacion().getYear();
+
+        model.addAttribute("invocador", invocador);
+        model.addAttribute("anios", anios);
+        return "invocador";
+    }
+
+    // 2. Ficha de campeón
+    @RequestMapping("/campeon")
+    public String campeon(Model model) {
+        Campeon campeon = new Campeon("Ahri", "Mid", 4800, 120);
+
+        model.addAttribute("campeon", campeon);
+        return "campeon";
+    }
+
+    // 3. Skin en oferta
+    @RequestMapping("/oferta")
+    public String oferta(Model model) {
+        Random r = new Random();
+        Skin skin = new Skin("Spirit Blossom Ahri", 1800);
+
+        int descuento = r.nextInt(46) + 15; // 15 a 60
+        int ahorro = skin.getPrecio() * descuento / 100;
+        int precioFinal = skin.getPrecio() - ahorro;
+
+        model.addAttribute("skin", skin);
+        model.addAttribute("descuento", descuento);
+        model.addAttribute("precioFinal", precioFinal);
+        model.addAttribute("ahorro", ahorro);
+        return "oferta";
+    }
+
+    // 4. Equipo
+    @RequestMapping("/equipo")
+    public String equipo(Model model) {
+        Jugador jugador1 = new Jugador("Faker", 8, 2, 6);
+        Jugador jugador2 = new Jugador("Oner", 5, 3, 9);
+        Jugador jugador3 = new Jugador("Gumayusi", 9, 1, 4);
+        Equipo equipo = new Equipo(jugador1, jugador2, jugador3);
+
+        int mediaKills = equipo.getKillsTotales() / 3;
+
+        model.addAttribute("equipo", equipo);
+        model.addAttribute("mediaKills", mediaKills);
+        return "equipo";
+    }
+
+    // 5. Campeón del día
+    @RequestMapping("/sugerencia")
+    public String sugerencia(Model model) {
+        Random r = new Random();
+        String[] campeones = {"Ahri", "Jinx", "Yasuo", "Garen", "Lux", "Thresh"};
+        String campeonDelDia = campeones[r.nextInt(6)];
+
+        model.addAttribute("campeonDelDia", campeonDelDia);
+        return "sugerencia";
+    }
+
+    // 6. KDA
+    @RequestMapping("/kda")
+    public String kda(Model model) {
+        Partida partida = new Partida("Yasuo", 10, 4, 6);
+
+        model.addAttribute("partida", partida);
+        return "kda";
+    }
+
+    // 7. Duelo
+    @RequestMapping("/duelo")
+    public String duelo(Model model) {
+        Random r = new Random();
+
+        Luchador luchador1 = new Luchador("Garen", r.nextInt(101) + 100, r.nextInt(21) + 10);
+        Luchador luchador2 = new Luchador("Darius", r.nextInt(101) + 100, r.nextInt(21) + 10);
+
+        String resumen = "";
+        for (int ronda = 1; ronda <= 5; ronda++) {
+            luchador1.setVida(luchador1.getVida() - luchador2.getAtaque());
+            luchador2.setVida(luchador2.getVida() - luchador1.getAtaque());
+
+            resumen = resumen + "Ronda " + ronda + ": "
+                    + luchador1.getNombre() + " (" + luchador1.getVida() + ") - "
+                    + luchador2.getNombre() + " (" + luchador2.getVida() + ")   ";
+        }
+
+        String ganador;
+        int diferencia;
+        if (luchador1.getVida() > luchador2.getVida()) {
+            ganador = luchador1.getNombre();
+            diferencia = luchador1.getVida() - luchador2.getVida();
+        } else if (luchador2.getVida() > luchador1.getVida()) {
+            ganador = luchador2.getNombre();
+            diferencia = luchador2.getVida() - luchador1.getVida();
+        } else {
+            ganador = "Empate";
+            diferencia = 0;
+        }
+
+        model.addAttribute("resumen", resumen);
+        model.addAttribute("ganador", ganador);
+        model.addAttribute("diferencia", diferencia);
+        return "duelo";
+    }
+
+    // 8. Tienda
+    @RequestMapping("/tienda")
+    public String tienda(Model model) {
+        Random r = new Random();
+
+        Objeto objeto1 = new Objeto("Espada del Infinito", 3400);
+        Objeto objeto2 = new Objeto("Botas de Mercurio", 1100);
+        Objeto objeto3 = new Objeto("Poción de vida", 50);
+
+        LineaCompra linea1 = new LineaCompra(objeto1, r.nextInt(3) + 1);
+        LineaCompra linea2 = new LineaCompra(objeto2, r.nextInt(3) + 1);
+        LineaCompra linea3 = new LineaCompra(objeto3, r.nextInt(3) + 1);
+
+        Cesta cesta = new Cesta(linea1, linea2, linea3);
+
+        model.addAttribute("cesta", cesta);
+        return "tienda";
+    }
+
+    // 9. Código de cuenta
+    @RequestMapping("/codigo")
+    public String codigo(Model model) {
+        Random r = new Random();
+        Invocador invocador = new Invocador("Faker", "EUW", LocalDate.of(2014, 1, 1));
+
+        int anios = LocalDate.now().getYear() - invocador.getFechaCreacion().getYear();
+
+        String letras = invocador.getNick().substring(0, 2).toUpperCase();
+        String numeros = "" + r.nextInt(10) + r.nextInt(10) + r.nextInt(10) + r.nextInt(10);
+        String codigo = letras + "-" + invocador.getFechaCreacion().getYear() + "-" + numeros;
+
+        model.addAttribute("invocador", invocador);
+        model.addAttribute("codigo", codigo);
+        model.addAttribute("anios", anios);
+        return "codigo";
+    }
+
+    // 10. Resumen libre
+    @RequestMapping("/resumen")
+    public String resumen(Model model) {
+        Random r = new Random();
+        Perfil perfil = new Perfil("Faker", LocalDate.of(1997, 5, 7), "Corea");
+        int puntuacion = r.nextInt(11); // 0 a 10
+
+        Resultado resultado = new Resultado(perfil, puntuacion);
+
+        model.addAttribute("resultado", resultado);
+        model.addAttribute("evento", "la partida");
+        return "resumen";
+    }
+}
+
+
+-------------------------------------------------------------------------
+                                MODELO
+-------------------------------------------------------------------------
+
+package com.dawes.ejerciciothymeleafampliacion.modelo;
+
+import java.time.LocalDate;
+
+public class Invocador {
+    private String nick;
+    private String servidor;
+    private LocalDate fechaCreacion;
+
+    public Invocador(String nick, String servidor, LocalDate fechaCreacion) {
+        this.nick = nick;
+        this.servidor = servidor;
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getNick() { return nick; }
+    public String getServidor() { return servidor; }
+    public LocalDate getFechaCreacion() { return fechaCreacion; }
+}
+
+
+
+
+
+package com.dawes.ejerciciothymeleafampliacion.modelo;
+
+public class Campeon {
+    private String nombre;
+    private String rol;
+    private double precio;
+    private int partidas;
+
+    public Campeon(String nombre, String rol, double precio, int partidas) {
+        this.nombre = nombre;
+        this.rol = rol;
+        this.precio = precio;
+        this.partidas = partidas;
+    }
+
+    public double getCostePorPartida() {
+        return Math.round(this.precio / this.partidas * 100) / 100.0;
+    }
+
+    public String getTipoJugador() {
+        if (this.partidas < 10) {
+            return "Novato";
+        } else if (this.partidas < 100) {
+            return "Habitual";
+        } else {
+            return "Main";
+        }
+    }
+
+    public String getNombre() { return nombre; }
+    public String getRol() { return rol; }
+    public double getPrecio() { return precio; }
+    public int getPartidas() { return partidas; }
+}
+
+
+
+
+package com.dawes.ejerciciothymeleafampliacion.modelo;
+
+public class Skin {
+    private String nombre;
+    private int precio;
+
+    public Skin(String nombre, int precio) {
+        this.nombre = nombre;
+        this.precio = precio;
+    }
+
+    public String getNombre() { return nombre; }
+    public int getPrecio() { return precio; }
+}
+
+
+
+
+package com.dawes.ejerciciothymeleafampliacion.modelo;
+
+public class Jugador {
+    private String nick;
+    private int kills;
+    private int muertes;
+    private int asistencias;
+
+    public Jugador(String nick, int kills, int muertes, int asistencias) {
+        this.nick = nick;
+        this.kills = kills;
+        this.muertes = muertes;
+        this.asistencias = asistencias;
+    }
+
+    public String getNick() { return nick; }
+    public int getKills() { return kills; }
+    public int getMuertes() { return muertes; }
+    public int getAsistencias() { return asistencias; }
+}
+
+
+
+
+package com.dawes.ejerciciothymeleafampliacion.modelo;
+
+public class Equipo {
+    private Jugador jugador1;
+    private Jugador jugador2;
+    private Jugador jugador3;
+
+    public Equipo(Jugador jugador1, Jugador jugador2, Jugador jugador3) {
+        this.jugador1 = jugador1;
+        this.jugador2 = jugador2;
+        this.jugador3 = jugador3;
+    }
+
+    public int getKillsTotales() {
+        return jugador1.getKills() + jugador2.getKills() + jugador3.getKills();
+    }
+
+    public int getAsistenciasTotales() {
+        return jugador1.getAsistencias() + jugador2.getAsistencias() + jugador3.getAsistencias();
+    }
+
+    public Jugador getMVP() {
+        Jugador mvp = jugador1;
+        if (jugador2.getKills() > mvp.getKills()) {
+            mvp = jugador2;
+        }
+        if (jugador3.getKills() > mvp.getKills()) {
+            mvp = jugador3;
+        }
+        return mvp;
+    }
+
+    public Jugador getJugador1() { return jugador1; }
+    public Jugador getJugador2() { return jugador2; }
+    public Jugador getJugador3() { return jugador3; }
+}
+
+
+
+
+
+package com.dawes.ejerciciothymeleafampliacion.modelo;
+
+public class Partida {
+    private String campeon;
+    private int kills;
+    private int muertes;
+    private int asistencias;
+
+    public Partida(String campeon, int kills, int muertes, int asistencias) {
+        this.campeon = campeon;
+        this.kills = kills;
+        this.muertes = muertes;
+        this.asistencias = asistencias;
+    }
+
+    public double getKda() {
+        double kda = 1.0 * (this.kills + this.asistencias) / this.muertes;
+        return Math.round(kda * 100) / 100.0;
+    }
+
+    public String getValoracion() {
+        if (getKda() < 2) {
+            return "Floja";
+        } else if (getKda() < 4) {
+            return "Normal";
+        } else {
+            return "Excelente";
+        }
+    }
+
+    public String getCampeon() { return campeon; }
+    public int getKills() { return kills; }
+    public int getMuertes() { return muertes; }
+    public int getAsistencias() { return asistencias; }
+}
+
+
+
+
+
+package com.dawes.ejerciciothymeleafampliacion.modelo;
+
+public class Luchador {
+    private String nombre;
+    private int vida;
+    private int ataque;
+
+    public Luchador(String nombre, int vida, int ataque) {
+        this.nombre = nombre;
+        this.vida = vida;
+        this.ataque = ataque;
+    }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public int getVida() { return vida; }
+    public void setVida(int vida) { this.vida = vida; }
+    public int getAtaque() { return ataque; }
+    public void setAtaque(int ataque) { this.ataque = ataque; }
+}
+
+
+
+
+package com.dawes.ejerciciothymeleafampliacion.modelo;
+
+public class Objeto {
+    private String nombre;
+    private double precio;
+
+    public Objeto(String nombre, double precio) {
+        this.nombre = nombre;
+        this.precio = precio;
+    }
+
+    public String getNombre() { return nombre; }
+    public double getPrecio() { return precio; }
+}
+
+
+
+
+package com.dawes.ejerciciothymeleafampliacion.modelo;
+
+public class LineaCompra {
+    private Objeto objeto;
+    private int cantidad;
+
+    public LineaCompra(Objeto objeto, int cantidad) {
+        this.objeto = objeto;
+        this.cantidad = cantidad;
+    }
+
+    public double getImporte() {
+        return this.objeto.getPrecio() * this.cantidad;
+    }
+
+    public Objeto getObjeto() { return objeto; }
+    public int getCantidad() { return cantidad; }
+}
+
+
+
+
+package com.dawes.ejerciciothymeleafampliacion.modelo;
+
+public class Cesta {
+    private LineaCompra linea1;
+    private LineaCompra linea2;
+    private LineaCompra linea3;
+
+    public Cesta(LineaCompra linea1, LineaCompra linea2, LineaCompra linea3) {
+        this.linea1 = linea1;
+        this.linea2 = linea2;
+        this.linea3 = linea3;
+    }
+
+    public double getSubtotal() {
+        return linea1.getImporte() + linea2.getImporte() + linea3.getImporte();
+    }
+
+    public double getComision() {
+        return getSubtotal() * 0.10;
+    }
+
+    public double getTotal() {
+        return getSubtotal() + getComision();
+    }
+
+    public LineaCompra getLinea1() { return linea1; }
+    public LineaCompra getLinea2() { return linea2; }
+    public LineaCompra getLinea3() { return linea3; }
+}
+
+
+
+
+package com.dawes.ejerciciothymeleafampliacion.modelo;
+
+import java.time.LocalDate;
+
+public class Perfil {
+    private String nombre;
+    private LocalDate fechaNacimiento;
+    private String pais;
+
+    public Perfil(String nombre, LocalDate fechaNacimiento, String pais) {
+        this.nombre = nombre;
+        this.fechaNacimiento = fechaNacimiento;
+        this.pais = pais;
+    }
+
+    public int getEdad() {
+        return LocalDate.now().getYear() - this.fechaNacimiento.getYear();
+    }
+
+    public String getNombre() { return nombre; }
+    public LocalDate getFechaNacimiento() { return fechaNacimiento; }
+    public String getPais() { return pais; }
+}
+
+
+
+
+package com.dawes.ejerciciothymeleafampliacion.modelo;
+
+public class Resultado {
+    private Perfil perfil;
+    private int puntuacion;
+
+    public Resultado(Perfil perfil, int puntuacion) {
+        this.perfil = perfil;
+        this.puntuacion = puntuacion;
+    }
+
+    public String getResultado() {
+        if (this.puntuacion >= 5) {
+            return "ganado";
+        } else {
+            return "perdido";
+        }
+    }
+
+    public Perfil getPerfil() { return perfil; }
+    public int getPuntuacion() { return puntuacion; }
+}
+
+
+
+
+-------------------------------------------------------------------------
+                                INDEX
+-------------------------------------------------------------------------
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+<li><a th:href="@{/invocador}">1 - Invocador</a></li><br>
+<li><a th:href="@{/campeon}">2 - Ficha de campeón</a></li><br>
+<li><a th:href="@{/oferta}">3 - Skin en oferta</a></li><br>
+<li><a th:href="@{/equipo}">4 - Equipo</a></li><br>
+<li><a th:href="@{/sugerencia}">5 - Campeón del día</a></li><br>
+<li><a th:href="@{/kda}">6 - KDA</a></li><br>
+<li><a th:href="@{/duelo}">7 - Duelo</a></li><br>
+<li><a th:href="@{/tienda}">8 - Tienda</a></li><br>
+<li><a th:href="@{/codigo}">9 - Código de cuenta</a></li><br>
+<li><a th:href="@{/resumen}">10 - Resumen</a></li><br>
+</body>
+</html>
+
+
+-------------------------------------------------------------------------
+                                RESTO HTML
+-------------------------------------------------------------------------
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Invocador</title>
+</head>
+<body>
+<div th:object="${invocador}">
+    <p th:text="|Invocador *{nick} (*{servidor}). Cuenta creada hace ${anios} años|"></p>
+</div>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Campeón</title>
+</head>
+<body>
+<div th:object="${campeon}">
+    <p th:text="|*{nombre} (*{rol}): *{precio} EA, *{partidas} partidas → *{costePorPartida} EA/partida. Tipo de jugador: *{tipoJugador}|"></p>
+</div>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Oferta</title>
+</head>
+<body>
+<div th:object="${skin}">
+    <p th:text="|Skin *{nombre}: -${descuento} % → ${precioFinal} RP (ahorras ${ahorro} RP)|"></p>
+</div>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Equipo</title>
+</head>
+<body>
+<div th:object="${equipo}">
+    <p th:text="|*{jugador1.nick}: *{jugador1.kills} kills|"></p>
+    <p th:text="|*{jugador2.nick}: *{jugador2.kills} kills|"></p>
+    <p th:text="|*{jugador3.nick}: *{jugador3.kills} kills|"></p>
+    <hr>
+    <p th:text="|Kills totales: *{killsTotales}|"></p>
+    <p th:text="|Asistencias totales: *{asistenciasTotales}|"></p>
+    <p th:text="|MVP: *{MVP.nick}|"></p>
+    <p th:text="|Media de ${mediaKills} kills por jugador|"></p>
+</div>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sugerencia</title>
+</head>
+<body>
+<p th:text="|Hoy te recomendamos jugar: ${campeonDelDia}|"></p>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>KDA</title>
+</head>
+<body>
+<div th:object="${partida}">
+    <p th:text="|*{campeon}: *{kills}/*{muertes}/*{asistencias} → KDA *{kda}. Valoración: *{valoracion}|"></p>
+</div>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Duelo</title>
+</head>
+<body>
+<p th:text="${resumen}"></p>
+<p th:text="|Ganador: ${ganador}|"></p>
+<p th:text="|Diferencia de vida: ${diferencia}|"></p>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tienda</title>
+</head>
+<body>
+<div th:object="${cesta}">
+    <p th:text="|*{linea1.objeto.nombre} x *{linea1.cantidad} = *{linea1.importe}|"></p>
+    <p th:text="|*{linea2.objeto.nombre} x *{linea2.cantidad} = *{linea2.importe}|"></p>
+    <p th:text="|*{linea3.objeto.nombre} x *{linea3.cantidad} = *{linea3.importe}|"></p>
+    <hr>
+    <p th:text="|SUBTOTAL: *{subtotal}|"></p>
+    <p th:text="|COMISIÓN: *{comision}|"></p>
+    <p th:text="|TOTAL: *{total}|"></p>
+</div>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Código</title>
+</head>
+<body>
+<div th:object="${invocador}">
+    <p th:text="|Cuenta *{nick}: código ${codigo}, ${anios} años de antigüedad|"></p>
+</div>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumen</title>
+</head>
+<body>
+<div th:object="${resultado}">
+    <p th:text="|Ficha de *{perfil.nombre}, *{perfil.edad} años, de *{perfil.pais}. Ha *{resultado} ${evento} con un *{puntuacion}.|"></p>
+</div>
+</body>
+</html>

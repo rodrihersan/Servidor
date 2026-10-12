@@ -19,33 +19,41 @@ public class Carrito {
     }
 
     public double getIVA(){
+
         return getSubtotal() * 0.21;
     }
 
     public double getTotal(){
+
         return getSubtotal() + getIVA();
     }
     public LineaCarrito getLineaCarrito1() {
+
         return lineaCarrito1;
     }
 
     public void setLineaCarrito1(LineaCarrito lineaCarrito1) {
+
         this.lineaCarrito1 = lineaCarrito1;
     }
 
     public LineaCarrito getLineaCarrito2() {
+
         return lineaCarrito2;
     }
 
     public void setLineaCarrito2(LineaCarrito lineaCarrito2) {
+
         this.lineaCarrito2 = lineaCarrito2;
     }
 
     public LineaCarrito getLineaCarrito3() {
+
         return lineaCarrito3;
     }
 
     public void setLineaCarrito3(LineaCarrito lineaCarrito3) {
+
         this.lineaCarrito3 = lineaCarrito3;
     }
 }

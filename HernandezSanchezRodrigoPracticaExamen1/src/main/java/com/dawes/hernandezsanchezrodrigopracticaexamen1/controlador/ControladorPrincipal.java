@@ -1,5 +1,6 @@
 package com.dawes.hernandezsanchezrodrigopracticaexamen1.controlador;
 
+import com.dawes.hernandezsanchezrodrigopracticaexamen1.modelo.Biblioteca;
 import com.dawes.hernandezsanchezrodrigopracticaexamen1.modelo.Juego;
 import com.dawes.hernandezsanchezrodrigopracticaexamen1.modelo.Usuario;
 import org.springframework.cglib.core.Local;
@@ -45,8 +46,8 @@ public class ControladorPrincipal {
         return "oferta";
     }
 
-    @RequestMapping("/biblioteca")
+    /*@RequestMapping("/biblioteca")
     public String biblioteca(Model model){
-        Biblioteca biblioteca = new Biblioteca
-    }
+        Biblioteca
+    }*/
 }

@@ -17,7 +17,7 @@ public class Juego {
 
     public double getDescuentoAleatorio(){
         Random r = new Random();
-        int descuentoAleatorio = r.nextInt(75 - 10 + 1) + 10;
+        int descuentoAleatorio = r.nextInt(66) + 10;
         return descuentoAleatorio;
     }
 

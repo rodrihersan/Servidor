@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Enfrentamiento</title>
+</head>
+<body>
+<p th:text="|${equipo1.nombre} (${equipo1.fuerza}) vs ${equipo2.nombre} (${equipo2.fuerza}) - ${resultado}|"></p>
+<!--
+<p>
+    <span th:object="${equipo1}" th:text="|*{nombre} (*{fuerza})|"></span>
+    vs
+    <span th:object="${equipo2}" th:text="|*{nombre} (*{fuerza})|"></span>
+    <span th:text="|- ${resultado}|"></span>
+</p>
+-->
+</body>
+</html>

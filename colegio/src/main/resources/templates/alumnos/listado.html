@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/css/index.css}">
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/css/formularios.css}">
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/css/tablas.css}">
+    <meta charset="UTF-8">
+    <title>Listado de Alumnos</title>
+</head>
+<body>
+<div th:replace="~{fragmentos/menu :: menu}"></div>
+<h1>Listado de alumnos</h1>
+<div class="container">
+    <div class="form">
+        <form th:action="@{/alumnos/listadoAlumnos}"
+              method="post">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre">
+            <label for="apellido">Apellidos</label>
+            <input type="text" id="apellido" name="apellido">
+            </br>
+            <label for="familiaNumerosa">Familia numerosa</label>
+            <input type="checkbox" id="familiaNumerosa"
+                   name="familiaNumerosa">
+            <label for="activo">Activo</label>
+            <input type="checkbox" id="activo" name="activo"
+                   checked>
+            <input type="submit" value="Buscar">
+        </form>
+    </div>
+</div>
+<h2 th:if="${listaAlumnos == null or listaAlumnos.isEmpty()}">No
+    hay alumnos que cumplan esos criterios</h2>
+<table th:if="${listaAlumnos != null and !listaAlumnos.isEmpty()}">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Municipio</th>
+        <th>Familia numerosa</th>
+        <th>Activo</th>
+    </tr>
+    <tr th:each="alumno : ${listaAlumnos}">
+        <td th:text="${alumno.id}"></td>
+        <td th:text="${alumno.nombre}"></td>
+        <td th:text="${alumno.apellido}"></td>
+        <td th:text="${alumno.municipio}"></td>
+        <td th:text="${alumno.familiaNumerosa} ? 'Sí' : 'No'"></td>
+        <td th:text="${alumno.activo} ? 'Sí' : 'No'"></td>
+    </tr>
+</table>
+</body>
+</html>

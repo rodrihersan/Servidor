@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav th:fragment="menu" class="menu">
+    <button class="dropbtn" th:href="@{/}">Inicio</button>
+    <div class="dropdown">
+        <button class="dropbtn">Alumnos</button>
+        <div class="dropdown-content">
+            <a th:href="@{/alumnos/listadoAlumnos}">Listar Alumnos</a>
+
+            <a th:href="@{/alumnos/insertarAlumno}">Insertar Alumnos</a>
+
+            <a th:href="@{/alumnos/formularioActualizarAlumnos}">Modificar Alumnos</a>
+
+            <a th:href="@{/alumnos/formularioBorrarAlumnos}">Borrar Alumnos</a>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

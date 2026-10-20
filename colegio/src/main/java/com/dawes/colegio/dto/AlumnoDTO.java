@@ -10,9 +10,7 @@ public class AlumnoDTO {
     private boolean activo;
     public AlumnoDTO() {
     }
-    public AlumnoDTO(String id, String nombre, String apellido, int
-                             idMunicipio, String municipio,
-                     boolean familiaNumerosa, boolean activo) {
+    public AlumnoDTO(String id, String nombre, String apellido, int idMunicipio, String municipio, boolean familiaNumerosa, boolean activo) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;

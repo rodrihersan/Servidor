@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/formularios.css}">
+    <meta charset="UTF-8">
+    <title>Modificar Alumnos</title>
+</head>
+<body>
+<div th:replace="~{fragmentos/menu :: menu}"></div>
+<h1>Modificar alumnos</h1>
+<div class="container">
+    <div class="form">
+        <form th:action="@{/alumnos/formularioActualizarAlumnos}"
+              method="post" id="formulario">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre">
+            <label for="apellido">Apellidos</label>
+            <input type="text" id="apellido" name="apellido"><br>
+            <label for="familiaNumerosa">Familia numerosa</label>
+            <input type="checkbox" id="familiaNumerosa"
+                   name="familiaNumerosa">
+            <label for="activo">Activo</label>
+            <input type="checkbox" id="activo" name="activo"
+                   checked><br>
+            <input type="submit" value="Buscar">
+        </form>
+    </div>
+</div>
+<div th:each="alumno : ${listaAlumnos}" class="form">
+    <form th:action="@{/alumnos/{id}/modificar(id=${alumno.id})}"
+          method="post">
+        <input type="hidden" name="id" th:value="${alumno.id}">
+        <label>Nombre</label>
+        <input type="text" name="nombre"
+               th:value="${alumno.nombre}"><br>
+        <label>Apellidos</label>
+        <input type="text" name="apellido"
+               th:value="${alumno.apellido}"><br>
+        <label>Familia numerosa</label>
+        <input type="checkbox" name="familiaNumerosa"
+               th:checked="${alumno.familiaNumerosa}"><br>
+        <label>Activo</label>
+        <input type="checkbox" name="activo"
+               th:checked="${alumno.activo}"><br>
+        <label>Municipio</label>
+        <select name="idMunicipio">
+            <option th:each="municipio : ${desplegableMunicipios}"
+                    th:value="${municipio.id}"
+                    th:text="${municipio.descripcion}"
+                    th:selected="${municipio.id ==alumno.idMunicipio}"></option>
+        </select><br>
+        <input type="submit" value="Modificar">
+    </form>
+</div>
+<p th:if="${resultado != null and resultado}">Alumno actualizado correctamente.</p>
+<p th:if="${resultado != null and !resultado}">No se ha podido actualizar el alumno.</p>
+</body>
+</html>

@@ -14,10 +14,23 @@ public class AlumnoDAO implements IAlumnoDAO {
         this.alumnoRepository = alumnoRepository;
     }
     @Override
-    public ArrayList<AlumnoDTO> buscarAlumnos(String nombre, String
-            apellido, boolean familiaNumerosa, boolean activo) {
-        return alumnoRepository.buscarAlumnos(nombre, apellido,
-                familiaNumerosa, activo);
+    public ArrayList<AlumnoDTO> buscarAlumnos(String nombre, String apellido, boolean familiaNumerosa, boolean activo) {
+        return alumnoRepository.buscarAlumnos(nombre, apellido, familiaNumerosa, activo);
+    }
+
+    @Override
+    public int insertarAlumno(AlumnoDTO alumno) {
+        return alumnoRepository.insertar(alumno);
+    }
+
+    @Override
+    public int actualizarAlumno(AlumnoDTO alumno) {
+        return alumnoRepository.actualizar(alumno);
+    }
+
+    @Override
+    public int eliminarAlumno(String id) {
+        return alumnoRepository.eliminar(id);
     }
 }
 

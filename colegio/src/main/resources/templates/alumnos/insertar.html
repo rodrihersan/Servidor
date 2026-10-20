@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/formularios.css}">
+    <meta charset="UTF-8">
+    <title>Insertar Alumno</title>
+</head>
+<body>
+<div th:replace="~{fragmentos/menu :: menu}"></div>
+<header>
+    <h1>Insertar nuevo alumno</h1>
+</header>
+<div class="container">
+    <div class="form">
+        <form th:action="@{/alumnos/insertarAlumno}"
+              th:object="${alumno}" method="post" id="formulario">
+            <label for="id">ID</label>
+            <input type="text" id="id" th:field="*{id}">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" th:field="*{nombre}">
+            <label for="apellido">Apellidos</label>
+            <input type="text" id="apellido" th:field="*{apellido}"><br>
+            <label for="familiaNumerosa">Familia
+                numerosa</label>
+            <input type="checkbox" id="familiaNumerosa"
+                   th:field="*{familiaNumerosa}">
+            <label for="activo">Activo</label>
+            <input type="checkbox" id="activo" th:field="*{activo}"><br>
+            <label for="idMunicipio">Municipio</label>
+            <select id="idMunicipio" th:field="*{idMunicipio}">
+                <option th:each="municipio :${desplegableMunicipios}"
+                        th:value="${municipio.id}"
+                        th:text="${municipio.descripcion}"></option>
+            </select><br>
+            <input type="submit" value="Insertar">
+        </form>
+    </div>
+</div>
+<p th:if="${resultado != null and resultado}">Alumno insertado
+    correctamente.</p>
+<p th:if="${resultado != null and !resultado}">No se ha podido
+    insertar el alumno.</p>
+</body>
+</html>

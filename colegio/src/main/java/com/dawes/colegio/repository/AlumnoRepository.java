@@ -73,4 +73,67 @@ public class AlumnoRepository {
             }
         }
     }
+
+
+    public int insertar(AlumnoDTO alumno) {
+        String sql = "INSERT INTO alumnos (id, nombre, apellidos, id_municipio, familia_numerosa, activo) " + "VALUES (?, ?, ?, ?, ?, ?)";
+        Connection connection = null;
+        int filasAfectadas = 0;
+        try {
+            connection = dataSource.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, alumno.getId());
+            ps.setString(2, alumno.getNombre());
+            ps.setString(3, alumno.getApellido());
+            ps.setInt(4, alumno.getIdMunicipio());
+            ps.setBoolean(5, alumno.isFamiliaNumerosa());
+            ps.setBoolean(6, alumno.isActivo());
+            filasAfectadas = ps.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            logger.error("Error al insertar el alumno {}", alumno.getId(), e);
+            cerrarConexion(connection);
+        }
+        return filasAfectadas;
+    }
+
+    public int actualizar(AlumnoDTO alumno) {
+        String sql = "UPDATE alumnos SET nombre = ?, apellidos = ?, id_municipio = ?, " + "familia_numerosa = ?, activo = ? WHERE id = ?";
+        Connection connection = null;
+        int filasAfectadas = 0;
+        try {
+            connection = dataSource.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, alumno.getNombre());
+            ps.setString(2, alumno.getApellido());
+            ps.setInt(3, alumno.getIdMunicipio());
+            ps.setBoolean(4, alumno.isFamiliaNumerosa());
+            ps.setBoolean(5, alumno.isActivo());
+            ps.setString(6, alumno.getId());
+            filasAfectadas = ps.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            logger.error("Error al actualizar el alumno {}",
+                    alumno.getId(), e);
+            cerrarConexion(connection);
+        }
+        return filasAfectadas;
+    }
+
+    public int eliminar(String id) {
+        String sql = "DELETE FROM alumnos WHERE id = ?";
+        Connection connection = null;
+        int filasAfectadas = 0;
+        try {
+            connection = dataSource.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, id);
+            filasAfectadas = ps.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            logger.error("Error al eliminar el alumno {}", id, e);
+            cerrarConexion(connection);
+        }
+        return filasAfectadas;
+    }
 }

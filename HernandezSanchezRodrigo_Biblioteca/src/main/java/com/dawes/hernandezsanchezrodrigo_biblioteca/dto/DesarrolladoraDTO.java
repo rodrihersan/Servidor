@@ -3,7 +3,7 @@ package com.dawes.hernandezsanchezrodrigo_biblioteca.dto;
 public class DesarrolladoraDTO {
     private String nombre;
     private String pais;
-    private int id;
+    private Integer id;
 
     public DesarrolladoraDTO(String nombre, String pais, int id) {
         this.nombre = nombre;

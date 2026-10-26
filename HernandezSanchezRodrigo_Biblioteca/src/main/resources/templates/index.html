@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Gestión de Biblioteca</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
-
+<header>
+    <h2>Gestión de Biblioteca</h2>
+</header>
+<div th:replace="~{fragmentos/menu :: menu}"></div>
 </body>
 </html>

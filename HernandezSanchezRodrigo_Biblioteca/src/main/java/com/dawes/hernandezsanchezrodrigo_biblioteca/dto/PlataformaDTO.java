@@ -1,7 +1,7 @@
 package com.dawes.hernandezsanchezrodrigo_biblioteca.dto;
 
 public class PlataformaDTO {
-    private int id;
+    private Integer id;
     private String nombre;
 
     public PlataformaDTO(int id, String nombre) {

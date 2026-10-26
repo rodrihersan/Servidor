@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav th:fragment="menu" class="menu">
+    <button class="dropbtn" th:href="@{/}">Inicio</button>
+    <div class="dropdown">
+        <button class="dropbtn">Alumnos</button>
+        <div class="dropdown-content">
+            <a th:href="@{/videojuego/listadoVideojuegos}">Listar videojuegos</a>
+
+            <a th:href="@{/videojuego/insertarVideojuegos}">Insertar videojuegos</a>
+
+            <a th:href="@{/socio/formularioListarSocio}">Listar socios</a>
+
+            <a th:href="@{/socio/formularioInsertarSocio}">Insertar socios</a>
+
+            <a th:href="@{/prestamo/formularioRegistrarPrestamo}">Registrar préstamo</a>
+
+            <a th:href="@{/prestamo/formularioListarPrestamo}">Listar préstamos</a>
+
+            <a th:href="@{/prestamo/formularioDevolverPrestamo}">Devolver préstamo</a>
+
+            <a th:href="@{/alumnos/formularioBorrarAlumnos}">Inicio</a> ??????
+        </div>
+    </div>
+</nav>
+</body>
+</html>

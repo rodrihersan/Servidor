@@ -3,7 +3,7 @@ package com.dawes.hernandezsanchezrodrigo_biblioteca.dto;
 import java.time.LocalDate;
 
 public class SociosDTO {
-    private int id;
+    private Integer id;
     private String nombre;
     private String apellidos;
     private String email;

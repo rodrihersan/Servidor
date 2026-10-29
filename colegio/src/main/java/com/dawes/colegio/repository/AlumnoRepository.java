@@ -16,11 +16,10 @@ import java.util.ArrayList;
 @Repository
 public class AlumnoRepository {
     private static final Logger logger = LoggerFactory.getLogger(AlumnoRepository.class);
-
     private final DataSource dataSource;
-    public AlumnoRepository(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+
+    public AlumnoRepository(DataSource dataSource) {this.dataSource = dataSource;}
+
     //LISTAR
     public ArrayList<AlumnoDTO> buscarAlumnos(String nombre, String apellido, boolean familiaNumerosa, boolean activo) {
         String sql = "SELECT a.id, a.nombre, a.apellidos, a.id_municipio, m.nombre AS municipio, "
@@ -64,16 +63,6 @@ public class AlumnoRepository {
                 rs.getBoolean("activo")
         );
     }
-    private void cerrarConexion(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
-
 
     public int insertar(AlumnoDTO alumno) {
         String sql = "INSERT INTO alumnos (id, nombre, apellidos, id_municipio, familia_numerosa, activo) " + "VALUES (?, ?, ?, ?, ?, ?)";

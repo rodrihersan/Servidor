@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/formularios.css}">
+    <meta charset="UTF-8">
+    <title>Insertar Matriculación</title>
+</head>
+<body>
+<div th:replace="~{fragmentos/menu :: menu}"></div>
+<h1>Insertar matriculación</h1>
+<div class="container">
+    <div class="form">
+        <form th:action="@{/matriculaciones/insertar}"
+              th:object="${matriculacion}" method="post" id="formulario">
+            <label for="idAlumno">Alumno</label>
+            <select id="idAlumno" th:field="*{idAlumno}">
+                <option value="">Selecciona un alumno</option>
+                <option th:each="alumno :${desplegableAlumnos}" th:value="${alumno.id}"
+                        th:text="${alumno.descripcion}"></option>
+            </select>
+            <label for="idAsignatura">Asignatura</label>
+            <select id="idAsignatura" th:field="*{idAsignatura}">
+                <option value="">Selecciona una asignatura</option>
+                <option th:each="asignatura :${desplegableAsignaturas}"
+                        th:value="${asignatura.id}"
+                        th:text="${asignatura.descripcion}"></option>
+            </select><br>
+            <label for="fecha">Fecha (déjalo en blanco para la fecha actual)</label>
+            <input type="date" id="fecha" th:field="*{fecha}">
+            <br>
+            <input type="submit" value="Matricular">
+        </form>
+    </div>
+</div>
+<p th:if="${tasaPagada != null}" style="color: green;">
+    Matriculación insertada correctamente. Tienes que pagar
+    <span th:text="${tasaPagada}"></span> € por la matrícula.
+</p>
+<p th:if="${erroInsercion != null and erroInsercion}"
+   style="color: red;">
+    No se ha podido insertar la matriculación.
+</p>
+</body>
+</html>

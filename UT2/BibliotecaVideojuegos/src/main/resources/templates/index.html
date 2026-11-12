@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>GameVault · Biblioteca de videojuegos</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+<!-- Menú reutilizado desde el fragmento -->
+<div th:replace="~{fragmentos/menu :: menu}"></div>
+
+<h1>GameVault · Biblioteca de videojuegos</h1>
+
+<div class="contadores">
+    <div class="contador">
+        <span th:text="${totalVideojuegos}">0</span>
+        Videojuegos
+    </div>
+    <div class="contador">
+        <span th:text="${totalSociosActivos}">0</span>
+        Socios activos
+    </div>
+    <div class="contador">
+        <span th:text="${totalPrestamosAbiertos}">0</span>
+        Préstamos abiertos
+    </div>
+    <div class="contador vencidos">
+        <span th:text="${totalPrestamosVencidos}">0</span>
+        Préstamos vencidos
+    </div>
+</div>
+</body>
+</html>

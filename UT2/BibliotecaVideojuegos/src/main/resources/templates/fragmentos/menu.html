@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav th:fragment="menu" class="menu">
+    <ul>
+        <li><a th:href="@{/}">Inicio</a></li>
+        <li>Videojuegos
+            <ul>
+                <li><a th:href="@{/videojuegos/listadoVideojuegos}">Listar videojuegos</a></li>
+                <li><a th:href="@{/videojuegos/insertarVideojuego}">Insertar videojuego</a></li>
+            </ul>
+        </li>
+        <li>Socios
+            <ul>
+                <li><a th:href="@{/socios/listado}">Listar socios</a></li>
+                <li><a th:href="@{/socios/insertar}">Insertar socio</a></li>
+            </ul>
+        </li>
+        <li>Préstamos
+            <ul>
+                <li><a th:href="@{/prestamos/registrar}">Registrar préstamo</a></li>
+                <li><a th:href="@{/prestamos/listado}">Listar préstamos</a></li>
+                <li><a th:href="@{/prestamos/renovar}">Renovar préstamo</a></li>
+                <li><a th:href="@{/prestamos/devolver}">Devolver préstamo</a></li>
+                <li><a th:href="@{/prestamos/informe}">Informe de los 5 más prestados</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>

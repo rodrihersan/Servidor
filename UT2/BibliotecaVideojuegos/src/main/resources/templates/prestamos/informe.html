@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/tablas.css}">
+    <meta charset="UTF-8">
+    <title>Videojuegos más prestados</title>
+</head>
+<body>
+
+<div th:replace="~{fragmentos/menu :: menu}"></div>
+
+<h1>Informe de los 5 videojuegos más prestados</h1>
+
+<h2 th:if="${videojuegos == null or videojuegos.isEmpty()}">
+    Todavía no hay préstamos registrados
+</h2>
+
+<table th:if="${videojuegos != null and !videojuegos.isEmpty()}">
+
+    <tr>
+        <th>Videojuego</th>
+        <th>Número de préstamos</th>
+    </tr>
+
+    <tr th:each="videojuego : ${videojuegos}">
+
+        <td th:text="${videojuego.titulo}"></td>
+
+        <td th:text="${videojuego.numeroPrestamos}"></td>
+
+    </tr>
+
+</table>
+
+</body>
+</html>

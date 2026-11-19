@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Devolver préstamo</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/formularios.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/tablas.css}"/>
+    </head>
+    <body>
+        <div th:replace="~{fragmentos/menu :: menu}"></div>
+        <h1>Devolver préstamo</h1>
+        <div class="container">
+            <div class="form">
+                <form th:action="@{/prestamos/devolver}" method="post">
+                    <label for="socio">Socio</label>
+                    <input type="text" id="socio" name="socio"/>
+                    <input type="submit" value="Buscar"/>
+                </form>
+            </div>
+        </div>
+        <div th:replace="~{fragmentos/mensajes :: mensajes}"></div>
+
+        <div class="resumen" th:if="${prestamoDevuelto != null}">
+            <h2>Préstamo devuelto</h2>
+            <p><strong th:text="${prestamoDevuelto.titulo}"></strong> (<span th:text="${prestamoDevuelto.plataforma}"></span>, copia <span th:text="${prestamoDevuelto.codigoInventario}"></span>)</p>
+            <p>Socio: <span th:text="${prestamoDevuelto.socio}"></span></p>
+            <p>Préstamo: <span th:text="${prestamoDevuelto.fechaPrestamo}"></span> · Fecha límite: <span th:text="${prestamoDevuelto.fechaLimite}"></span></p>
+            <p>Devuelto el <span th:text="${prestamoDevuelto.fechaDevolucion}"></span> ·
+               Días de retraso: <span th:text="${prestamoDevuelto.diasRetraso}"></span> ·
+               <strong>Multa: <span th:text="${#numbers.formatDecimal(prestamoDevuelto.multa, 1, 2)} + ' €'"></span></strong></p>
+        </div>
+
+        <h2 th:if="${listaAbiertos.isEmpty()}">No hay préstamos abiertos</h2>
+        <table th:if="${!listaAbiertos.isEmpty()}">
+            <tr><th>ID</th><th>Socio</th><th>Videojuego</th><th>Límite</th><th>Estado</th><th>Devolver</th></tr>
+            <tr th:each="p : ${listaAbiertos}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.socio}"></td>
+                <td th:text="${p.titulo + ' (' + p.plataforma + ')'}"></td>
+                <td th:text="${p.fechaLimite}"></td>
+                <td><span th:class="${'estado estado-' + p.estado}" th:text="${p.estado}"></span></td>
+                <td>
+                    <form th:action="@{/prestamos/confirmarDevolucion}" method="post">
+                        <input type="hidden" name="idPrestamo" th:value="${p.id}"/>
+                        <label>Copia dañada <input type="checkbox" name="copiaDanada"/></label>
+                        <input type="submit" value="Devolver"/>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+    </body>
+</html>

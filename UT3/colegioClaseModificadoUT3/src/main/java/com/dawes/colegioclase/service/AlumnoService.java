@@ -26,11 +26,12 @@ public class AlumnoService {
     public ArrayList<AlumnoDTO> buscarAlumnos(String nombre, String apellido, Boolean familiaNumerosa, Boolean activo) {
         return alumnoDAO.buscarAlumnos(nombre, apellido, familiaNumerosa, activo);
     }
-/*
-    public int insertarAlumno(AlumnoDTO alumno) {
-        return alumnoDAO.insertarAlumno(alumno);
-    }
-    */
+
+    /*
+        public int insertarAlumno(AlumnoDTO alumno) {
+            return alumnoDAO.insertarAlumno(alumno);
+        }
+        */
     public ArrayList<DesplegableDTO> obtenerDesplegableMunicipios() {
         return municipioDAO.listarParaDesplegable();
     }
@@ -59,28 +60,22 @@ public class AlumnoService {
 
 
     public AlumnoDTO insertarAlumnoRest(AlumnoDTO alumno) {
-        if (alumnoDAO.buscarPorId(alumno.getId()) != null) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Ya existe un alumno con id "
-                            + alumno.getId());
+        if (alumnoDAO.obtenerAlumnoPorId(alumno.getId()) != null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe un alumno con id " + alumno.getId());
         }
         int filasAfectadas = alumnoDAO.insertarAlumno(alumno);
         if (filasAfectadas != 1) {
-            throw new
-                    ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No se pudo insertar el alumno");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No se pudo insertar el alumno");
         }
-        return alumnoDAO.buscarPorId(alumno.getId());
+        return alumnoDAO.obtenerAlumnoPorId(alumno.getId());
     }
-}
+
     public int eliminarAlumno(Integer id) {
         return alumnoDAO.eliminarAlumno(id);
     }
 
-    public ArrayList<AlumnoDTO> filtrarAlumnos(String nombre, String
-                                                       apellido, Integer idMunicipio,
-                                               Boolean familiaNumerosa,
-                                               Boolean activo) {
-        return alumnoDAO.filtrarAlumnos(nombre, apellido, idMunicipio,
-                familiaNumerosa, activo);
+    public ArrayList<AlumnoDTO> filtrarAlumnos(String nombre, String apellido, Integer idMunicipio, Boolean familiaNumerosa, Boolean activo) {
+        return alumnoDAO.filtrarAlumnos(nombre, apellido, idMunicipio, familiaNumerosa, activo);
     }
+}
 

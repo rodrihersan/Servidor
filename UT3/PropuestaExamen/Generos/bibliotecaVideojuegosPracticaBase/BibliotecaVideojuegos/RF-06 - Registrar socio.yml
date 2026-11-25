@@ -1,0 +1,26 @@
+info:
+  name: RF-06 - Registrar socio
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: http://localhost:8080/api/socios
+  body:
+    type: json
+    data: |-
+      {
+        "nombre": "Socio",
+        "apellidos": "De Prueba",
+        "email": "socioprueba@gmail.com",
+        "fechaNacimiento": "1995-05-20",
+        "activo": true
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

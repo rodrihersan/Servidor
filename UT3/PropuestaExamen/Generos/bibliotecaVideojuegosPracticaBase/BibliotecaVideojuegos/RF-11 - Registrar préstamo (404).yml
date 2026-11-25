@@ -1,0 +1,23 @@
+info:
+  name: RF-11 - Registrar préstamo (404)
+  type: http
+  seq: 13
+
+http:
+  method: POST
+  url: http://localhost:8080/api/prestamos
+  body:
+    type: json
+    data: |-
+      {
+        "idSocio": 9999,
+        "idCopia": 2
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

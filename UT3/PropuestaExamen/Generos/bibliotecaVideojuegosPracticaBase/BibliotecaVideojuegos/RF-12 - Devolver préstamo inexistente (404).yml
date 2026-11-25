@@ -1,0 +1,20 @@
+info:
+  name: RF-12 - Devolver préstamo inexistente (404)
+  type: http
+  seq: 18
+
+http:
+  method: PUT
+  url: http://localhost:8080/api/prestamos/9999/devolucion?copiaDanada=false
+  params:
+    - name: copiaDanada
+      value: "false"
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

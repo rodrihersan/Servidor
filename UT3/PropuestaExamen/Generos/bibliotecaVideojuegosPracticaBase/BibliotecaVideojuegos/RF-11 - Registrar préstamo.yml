@@ -1,0 +1,16 @@
+info:
+  name: RF-11 - Registrar préstamo
+  type: http
+  seq: 12
+
+http:
+  method: POST
+  url: http://localhost:8080/api/prestamos
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

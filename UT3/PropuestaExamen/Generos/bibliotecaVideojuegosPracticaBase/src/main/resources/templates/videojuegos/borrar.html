@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Borrar videojuegos</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/formularios.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/tablas.css}"/>
+    </head>
+    <body>
+        <div th:replace="~{fragmentos/menu :: menu}"></div>
+        <h1>Borrar videojuegos</h1>
+        <div th:replace="~{fragmentos/filtros :: filtroVideojuegos('/videojuegos/borrar')}"></div>
+        <div th:replace="~{fragmentos/mensajes :: mensajes}"></div>
+
+        <h2 th:if="${listaVideojuegos.isEmpty()}">No hay videojuegos que cumplan esos criterios</h2>
+        <table th:if="${!listaVideojuegos.isEmpty()}">
+            <tr>
+                <th>ID</th><th>Título</th><th>Desarrolladora</th><th>Año</th><th>PEGI</th><th>Copias</th><th>Disponibles</th><th>Borrar</th>
+            </tr>
+            <tr th:each="v : ${listaVideojuegos}">
+                <td th:text="${v.id}"></td>
+                <td th:text="${v.titulo}"></td>
+                <td th:text="${v.desarrolladora}"></td>
+                <td th:text="${v.añoLanzamiento}"></td>
+                <td th:text="${v.pegi}"></td>
+                <td th:text="${v.copiasTotales}"></td>
+                <td th:text="${v.copiasDisponibles}"></td>
+                <td>
+                    <form th:action="@{/videojuegos/eliminar}" method="post">
+                        <input type="hidden" name="id" th:value="${v.id}"/>
+                        <input type="submit" value="Borrar" onclick="return confirm('¿Seguro que quieres borrar este videojuego?')"/>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+    </body>
+</html>

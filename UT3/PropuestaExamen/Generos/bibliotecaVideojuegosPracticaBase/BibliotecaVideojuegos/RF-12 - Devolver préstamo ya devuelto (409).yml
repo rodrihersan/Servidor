@@ -1,0 +1,20 @@
+info:
+  name: RF-12 - Devolver préstamo ya devuelto (409)
+  type: http
+  seq: 16
+
+http:
+  method: PUT
+  url: http://localhost:8080/api/prestamos/27/devolucion?copiaDanada=false
+  params:
+    - name: copiaDanada
+      value: "false"
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
